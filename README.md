@@ -34,3 +34,19 @@ Un ejemplo de inserción es la siguiente
 ```
 /record?id_nodo=nodoPrueba1&temperatura=24.5&humedad=68.2&co2=293&volatiles=112
 ```
+
+## POST request 
+
+Con cURL se puede probar de la siguiente manera
+
+```shell
+curl --location --request POST 'localhost:3000/record' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id_nodo":"nodoPrueba1",
+    "temperatura":24.5,
+    "humedad":68.2,
+    "co2":293,
+    "volatiles":112
+    }'
+```
