@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
-
+var request = require('request');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -45,7 +45,8 @@ router.post('/record', function(req, res, next) {
       } else if(err.code === 'ENOENT') {
           // file does not exist
         let content ='id_nodo; timestamp; temperatura; humedad; CO2; volatiles\r\n'+req.body.id_nodo+';'+now.getTime()+";"+req.body.temperatura+";"+req.body.humedad+";"+req.body.co2+";"+req.body.volatiles+"\r\n";
-        append2file(logfile_name, content);
+        //append2file(logfile_name, content);
+	req_post (req.body);
       } else {
           console.log('Some other error: ', err.code);
       }
@@ -61,4 +62,15 @@ function append2file (file2append, content){
 });
 }
 
+function req_post (content){
+	request.post(
+    		'http://www.yoursite.com/formpage',
+    		content,
+    		function (error, response, body) {
+        		if (!error && response.statusCode == 200) {
+            			console.log(body);
+        		}
+    		}
+	);
+}
 module.exports = router;
